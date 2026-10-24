@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
+const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000'
+
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
@@ -20,7 +22,7 @@ function App() {
       setError(null)
 
       try {
-        const response = await fetch('http://localhost:3000/api/meals', {
+        const response = await fetch(`${API_URL}/api/meals`, {
           signal: controller.signal,
         })
 
