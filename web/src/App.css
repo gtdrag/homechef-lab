@@ -1,0 +1,232 @@
+.menu-page {
+  --ink: #24372d;
+  --muted: #778078;
+  --line: #dce2d8;
+  --leaf: #47704e;
+  --tomato: #c45e43;
+  min-height: 100svh;
+  padding: 0 clamp(22px, 7vw, 104px);
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at 92% 4%, rgba(232, 186, 133, 0.2), transparent 28rem),
+    #f3f6f0;
+  text-align: left;
+}
+
+.menu-header,
+.menu-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-header {
+  min-height: 82px;
+  border-bottom: 1px solid var(--line);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-size: 17px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.wordmark-mark {
+  display: grid;
+  width: 30px;
+  aspect-ratio: 1;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--leaf);
+  font-family: Georgia, serif;
+  font-size: 17px;
+}
+
+.header-note,
+.eyebrow,
+.menu-footer span:last-child {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.menu-content {
+  width: min(100%, 780px);
+  margin: 0 auto;
+  padding: clamp(54px, 9vw, 104px) 0 84px;
+}
+
+.menu-intro {
+  margin-bottom: 68px;
+}
+
+.eyebrow {
+  margin: 0 0 18px;
+  color: var(--leaf);
+}
+
+.menu-intro h1 {
+  margin: 0;
+  color: var(--ink);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(45px, 7vw, 76px);
+  font-weight: 400;
+  line-height: 1.04;
+}
+
+.menu-intro h1 em {
+  color: var(--tomato);
+  font-weight: 400;
+}
+
+.intro-copy {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.menu-toolbar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.menu-toolbar h2 {
+  margin: 0;
+  color: var(--ink);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 25px;
+  font-weight: 400;
+}
+
+.meal-count {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.meal-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.meal-row {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  min-height: 112px;
+  border-bottom: 1px solid var(--line);
+  animation: arrive 420ms both;
+}
+
+.meal-row:nth-child(2) { animation-delay: 45ms; }
+.meal-row:nth-child(3) { animation-delay: 90ms; }
+.meal-row:nth-child(4) { animation-delay: 135ms; }
+
+.meal-number {
+  color: var(--tomato);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.meal-details h3 {
+  margin: 0;
+  color: var(--ink);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 21px;
+  font-weight: 400;
+}
+
+.meal-details p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.meal-meta {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.calories {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.price {
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.status-message {
+  padding: 26px 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.error-state {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: #963f32;
+}
+
+.error-state button {
+  flex: 0 0 auto;
+  padding: 9px 14px;
+  border: 1px solid var(--tomato);
+  border-radius: 3px;
+  color: var(--tomato);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.error-state button:hover {
+  color: #fff;
+  background: var(--tomato);
+}
+
+.menu-footer {
+  min-height: 68px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13px;
+}
+
+@keyframes arrive {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 540px) {
+  .menu-header { min-height: 68px; }
+  .header-note { font-size: 8px; }
+  .menu-content { padding-top: 58px; padding-bottom: 58px; }
+  .menu-intro { margin-bottom: 50px; }
+  .meal-row { grid-template-columns: 28px minmax(0, 1fr) auto; gap: 11px; min-height: 100px; }
+  .meal-details h3 { font-size: 18px; }
+  .meal-details p { font-size: 12px; }
+  .price { font-size: 14px; }
+  .menu-footer { align-items: flex-start; flex-direction: column; justify-content: center; gap: 5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; }
+}

@@ -1,0 +1,25 @@
+:root {
+  font-family: 'Avenir Next', Avenir, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #24372d;
+  background: #f3f6f0;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+#root {
+  min-height: 100vh;
+}
