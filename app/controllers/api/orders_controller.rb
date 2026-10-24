@@ -1,5 +1,18 @@
 module Api
   class OrdersController < ActionController::API
+    PER_PAGE = 20
+
+    def index
+      page = [params.fetch(:page, 1).to_i, 1].max
+      orders = Order.recent.includes(:customer).limit(PER_PAGE).offset((page - 1) * PER_PAGE)
+
+      rows = orders.map do |order|
+        { id: order.id, delivery_date: order.delivery_date, status: order.status, customer: order.customer.name }
+      end
+
+      render json: { page: page, per_page: PER_PAGE, orders: rows }
+    end
+
     def show
       order = Order.includes(:customer, order_items: :meal).find(params[:id])
 

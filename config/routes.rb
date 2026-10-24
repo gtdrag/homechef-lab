@@ -13,6 +13,6 @@ Rails.application.routes.draw do
   # root "posts#index"
   namespace :api do
     resources :meals, only: [:index, :show, :create]
-    resources :orders, only: [:show]
+    resources :orders, only: [:index, :show]
   end
 end
