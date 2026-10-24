@@ -1,0 +1,13 @@
+<h1>This week's menu</h1>
+
+<ul>
+  <% @meals.each do |meal| %>
+    <li>
+      <strong><%= meal.name %></strong>
+      <%= number_to_currency(meal.price_cents / 100.0) %>
+      <% if meal.calories %>
+        <small><%= meal.calories %> cal</small>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
