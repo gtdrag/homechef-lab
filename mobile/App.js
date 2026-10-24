@@ -21,7 +21,7 @@ const currencyFormatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',
 });
 
-async function fetchAccount(token) {
+const fetchAccount = async (token) => {
   const response = await fetch(`${API_URL}/me`, {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -36,7 +36,7 @@ async function fetchAccount(token) {
   return { user, meals: await mealsResponse.json() };
 }
 
-export default function App() {
+const App = () => {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
   const [meals, setMeals] = useState([]);
@@ -49,7 +49,7 @@ export default function App() {
   useEffect(() => {
     let isActive = true;
 
-    async function restoreSession() {
+  const restoreSession = async () => {
       try {
         const storedToken = await SecureStore.getItemAsync(TOKEN_KEY);
         if (!storedToken) return;
@@ -78,7 +78,7 @@ export default function App() {
     };
   }, []);
 
-  async function signIn() {
+const signIn = async () => {
     setIsSubmitting(true);
     setError('');
 
@@ -253,6 +253,8 @@ export default function App() {
   );
 }
 
+export default App;
+
 const colors = {
   background: '#F3F6F0',
   green: '#315B42',
@@ -292,7 +294,7 @@ const styles = StyleSheet.create({
   brandMarkText: { color: '#fff', fontFamily: 'Georgia', fontSize: 17 },
   brandName: { marginLeft: 10, color: colors.ink, fontSize: 17, fontWeight: '700' },
   topNote: { marginLeft: 'auto', color: colors.muted, fontSize: 8, fontWeight: '700', letterSpacing: 0.7 },
-  loginContent: { width: '100%', maxWidth: 460, alignSelf: 'center', paddingTop: 84 },
+  loginContent: { width: '100%', maxWidth: 460, alignSelf: 'center', paddingTop: 32 },
   content: { width: '100%', maxWidth: 620, alignSelf: 'center', paddingTop: 30 },
   eyebrow: { marginBottom: 14, color: colors.green, fontSize: 10, fontWeight: '700', letterSpacing: 1.4 },
   title: { color: colors.ink, fontFamily: 'Georgia', fontSize: 46, lineHeight: 54 },
