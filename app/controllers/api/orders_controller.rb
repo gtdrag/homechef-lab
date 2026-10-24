@@ -3,7 +3,7 @@ module Api
     PER_PAGE = 20
 
     def index
-      page = [params.fetch(:page, 1).to_i, 1].max
+      page = [ params.fetch(:page, 1).to_i, 1 ].max
       orders = Order.recent.includes(:customer).limit(PER_PAGE).offset((page - 1) * PER_PAGE)
 
       rows = orders.map do |order|

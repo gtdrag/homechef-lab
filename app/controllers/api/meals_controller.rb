@@ -1,6 +1,6 @@
 module Api
   class MealsController < ActionController::API
-    MEAL_FIELDS = [:id, :name, :description, :price_cents, :calories]
+    MEAL_FIELDS = [ :id, :name, :description, :price_cents, :calories ]
 
     def index
       menu = Rails.cache.fetch("meals/menu", expires_in: 10.minutes) do
@@ -25,7 +25,7 @@ module Api
     private
 
     def meal_params
-      params.expect(meal: [:name, :description, :price_cents, :calories])
+      params.expect(meal: [ :name, :description, :price_cents, :calories ])
     end
   end
 end
