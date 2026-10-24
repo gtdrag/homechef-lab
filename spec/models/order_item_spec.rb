@@ -11,4 +11,4 @@ RSpec.describe OrderItem, type: :model do
 
     expect(item.reload.unit_price_cents).to eq(1400)
   end
-end
+endbundle exec rspec

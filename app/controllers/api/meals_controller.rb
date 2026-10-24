@@ -3,7 +3,10 @@ module Api
     MEAL_FIELDS = [:id, :name, :description, :price_cents, :calories]
 
     def index
-      render json: Meal.order(:name).as_json(only: MEAL_FIELDS)
+      menu = Rails.cache.fetch("meals/menu", expires_in: 10.minutes) do
+        Meal.order(:name).as_json(only: MEAL_FIELDS)
+      end
+      render json: menu
     end
 
     def show
