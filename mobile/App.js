@@ -6,24 +6,9 @@ import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text } from 're
 import { LoadingScreen, LoginScreen, MenuScreen } from './src/screens';
 import { colors } from './src/theme';
 import { TopBar } from './src/components';
+import { createSession, fetchAccount } from './src/api';
 
-const API_URL = 'https://homechef-lab-gdrag-5772e4ad85f4.herokuapp.com/api';
 const TOKEN_KEY = 'token';
-
-const fetchAccount = async (token) => {
-  const response = await fetch(`${API_URL}/me`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-
-  if (response.status === 401) return null;
-  if (!response.ok) throw new Error('Unable to load your account. Please try again.');
-
-  const user = await response.json();
-  const mealsResponse = await fetch(`${API_URL}/meals`);
-  if (!mealsResponse.ok) throw new Error('Unable to load the menu. Please try again.');
-
-  return { user, meals: await mealsResponse.json() };
-};
 
 const App = () => {
   const [token, setToken] = useState(null);
@@ -70,21 +55,11 @@ const App = () => {
     setError('');
 
     try {
-      const response = await fetch(`${API_URL}/session`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email_address: emailAddress, password }),
-      });
-
-      if (response.status === 401) {
+      const newToken = await createSession(emailAddress, password);
+      if (!newToken) {
         setError('Invalid email or password');
         return;
       }
-      if (!response.ok) throw new Error('Unable to sign in. Please try again.');
-
-      const { token: newToken } = await response.json();
-      if (!newToken) throw new Error('The sign-in response did not include a token.');
-
       await SecureStore.setItemAsync(TOKEN_KEY, newToken);
       const account = await fetchAccount(newToken);
 
