@@ -2,16 +2,8 @@ import { useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
-import { LoadingScreen } from './src/screens';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { LoadingScreen, LoginScreen } from './src/screens';
 import { colors } from './src/theme';
 import { Button, ErrorMessage, MealRow, PageHeader, TopBar } from './src/components';
 
@@ -37,8 +29,6 @@ const App = () => {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
   const [meals, setMeals] = useState([]);
-  const [emailAddress, setEmailAddress] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isRestoring, setIsRestoring] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -75,7 +65,7 @@ const App = () => {
     };
   }, []);
 
-  const signIn = async () => {
+  const signIn = async (emailAddress, password) => {
     setIsSubmitting(true);
     setError('');
 
@@ -107,7 +97,6 @@ const App = () => {
       setToken(newToken);
       setUser(account.user);
       setMeals(account.meals);
-      setPassword('');
     } catch (signInError) {
       setError(signInError.message);
     } finally {
@@ -115,7 +104,7 @@ const App = () => {
     }
   };
 
-  async function signOut() {
+  const signOut = async () => {
     setIsSubmitting(true);
     setError('');
 
@@ -124,13 +113,12 @@ const App = () => {
       setToken(null);
       setUser(null);
       setMeals([]);
-      setPassword('');
     } catch {
       setError('Unable to sign out. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
-  }
+  };
 
   if (isRestoring) return <LoadingScreen />;
 
@@ -172,50 +160,7 @@ const App = () => {
               />
             </View>
           ) : (
-            <View style={styles.loginContent}>
-              <PageHeader eyebrow="A BETTER KIND OF DINNER" title="Welcome" accent="home." />
-              <Text style={styles.subtitle}>Sign in to see what’s cooking.</Text>
-
-              <View style={styles.form}>
-                <Text style={styles.label}>EMAIL ADDRESS</Text>
-                <TextInput
-                  accessibilityLabel="Email address"
-                  autoCapitalize="none"
-                  autoComplete="email"
-                  autoCorrect={false}
-                  keyboardType="email-address"
-                  onChangeText={setEmailAddress}
-                  placeholder="you@example.com"
-                  placeholderTextColor={colors.placeholder}
-                  returnKeyType="next"
-                  style={styles.input}
-                  value={emailAddress}
-                />
-
-                <Text style={styles.label}>PASSWORD</Text>
-                <TextInput
-                  accessibilityLabel="Password"
-                  autoCapitalize="none"
-                  onChangeText={setPassword}
-                  onSubmitEditing={signIn}
-                  placeholder="Your password"
-                  placeholderTextColor={colors.placeholder}
-                  returnKeyType="go"
-                  secureTextEntry
-                  style={styles.input}
-                  value={password}
-                />
-
-                <ErrorMessage message={error} />
-
-                <Button
-                  title="Sign in"
-                  onPress={signIn}
-                  loading={isSubmitting}
-                  disabled={isSubmitting || !emailAddress.trim() || !password}
-                />
-              </View>
-            </View>
+            <LoginScreen onSignIn={signIn} isSubmitting={isSubmitting} error={error} />
           )}
 
           <Text style={styles.footer}>Made with care, served with ease.</Text>
@@ -230,29 +175,8 @@ export default App;
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
   scrollContent: { flexGrow: 1, paddingHorizontal: 24 },
-  loginContent: { width: '100%', maxWidth: 460, alignSelf: 'center', paddingTop: 32 },
   content: { width: '100%', maxWidth: 620, alignSelf: 'center', paddingTop: 30 },
-  subtitle: { marginTop: 12, color: colors.muted, fontSize: 15 },
   signedIn: { marginTop: 14, color: colors.muted, fontSize: 14 },
-  form: { marginTop: 38 },
-  label: {
-    marginTop: 18,
-    marginBottom: 8,
-    color: colors.green,
-    fontSize: 10,
-    fontWeight: '700',
-    letterSpacing: 1.1,
-  },
-  input: {
-    minHeight: 52,
-    paddingHorizontal: 15,
-    borderWidth: 1,
-    borderColor: colors.line,
-    borderRadius: 4,
-    color: colors.ink,
-    backgroundColor: '#fff',
-    fontSize: 16,
-  },
   menuHeader: {
     flexDirection: 'row',
     alignItems: 'baseline',
