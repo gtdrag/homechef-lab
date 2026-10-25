@@ -14,8 +14,7 @@ import {
   View,
 } from 'react-native';
 import { colors } from './src/theme';
-import TopBar from './src/components/TopBar';
-import MealRow from './src/components/MealRow';
+import { MealRow, TopBar } from './src/components';
 
 const API_URL = 'https://homechef-lab-gdrag-5772e4ad85f4.herokuapp.com/api';
 const TOKEN_KEY = 'token';
