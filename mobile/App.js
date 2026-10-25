@@ -13,6 +13,8 @@ import {
   TextInput,
   View
 } from 'react-native';
+import { colors } from './src/theme';
+import TopBar from './src/components/TopBar';
 
 const API_URL = 'https://homechef-lab-gdrag-5772e4ad85f4.herokuapp.com/api';
 const TOKEN_KEY = 'token';
@@ -153,11 +155,7 @@ const signIn = async () => {
     >
       <StatusBar style="dark" />
       <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
-        <View style={styles.topBar}>
-          <View style={styles.brandMark}><Text style={styles.brandMarkText}>h.</Text></View>
-          <Text style={styles.brandName}>homechef</Text>
-          <Text style={styles.topNote}>GOOD FOOD, READY WHEN YOU ARE</Text>
-        </View>
+        <TopBar />
 
         {token && user ? (
           <View style={styles.content}>
@@ -255,15 +253,6 @@ const signIn = async () => {
 
 export default App;
 
-const colors = {
-  background: '#F3F6F0',
-  green: '#315B42',
-  ink: '#24372D',
-  muted: '#778078',
-  line: '#DCE2D8',
-  coral: '#C45E43',
-  placeholder: '#9A9F98',
-};
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
@@ -276,24 +265,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   loadingText: { color: colors.muted, fontSize: 14 },
-  topBar: {
-    minHeight: 76,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.line,
-  },
-  brandMark: {
-    width: 32,
-    height: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 16,
-    backgroundColor: colors.green,
-  },
-  brandMarkText: { color: '#fff', fontFamily: 'Georgia', fontSize: 17 },
-  brandName: { marginLeft: 10, color: colors.ink, fontSize: 17, fontWeight: '700' },
-  topNote: { marginLeft: 'auto', color: colors.muted, fontSize: 8, fontWeight: '700', letterSpacing: 0.7 },
   loginContent: { width: '100%', maxWidth: 460, alignSelf: 'center', paddingTop: 32 },
   content: { width: '100%', maxWidth: 620, alignSelf: 'center', paddingTop: 30 },
   eyebrow: { marginBottom: 14, color: colors.green, fontSize: 10, fontWeight: '700', letterSpacing: 1.4 },
