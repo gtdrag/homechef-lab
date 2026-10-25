@@ -12,6 +12,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { LoadingScreen } from './src/screens';
 import { colors } from './src/theme';
 import { MealRow, TopBar, Button } from './src/components';
 
@@ -132,15 +133,7 @@ const App = () => {
     }
   }
 
-  if (isRestoring) {
-    return (
-      <SafeAreaView style={styles.loadingScreen}>
-        <StatusBar style="dark" />
-        <ActivityIndicator size="small" color={colors.green} />
-        <Text style={styles.loadingText}>Checking your session...</Text>
-      </SafeAreaView>
-    );
-  }
+  if (isRestoring) return <LoadingScreen />;
 
   return (
     <SafeAreaView style={styles.screen} edges={['top', 'bottom']}>
@@ -252,14 +245,6 @@ export default App;
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
   scrollContent: { flexGrow: 1, paddingHorizontal: 24 },
-  loadingScreen: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 14,
-    backgroundColor: colors.background,
-  },
-  loadingText: { color: colors.muted, fontSize: 14 },
   loginContent: { width: '100%', maxWidth: 460, alignSelf: 'center', paddingTop: 32 },
   content: { width: '100%', maxWidth: 620, alignSelf: 'center', paddingTop: 30 },
   eyebrow: {
