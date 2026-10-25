@@ -6,4 +6,4 @@ export const colors = {
   line: '#DCE2D8',
   coral: '#C45E43',
   placeholder: '#9A9F98',
-};
+} as const;

@@ -29,8 +29,10 @@
   },
   "private": true,
   "devDependencies": {
+    "@types/react": "~19.2.4",
     "eslint": "^9.0.0",
     "eslint-config-expo": "~57.0.2",
-    "plop": "^4.0.5"
+    "plop": "^4.0.5",
+    "typescript": "~6.0.3"
   }
 }
