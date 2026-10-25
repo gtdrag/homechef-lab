@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { LoadingScreen, LoginScreen } from './src/screens';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text } from 'react-native';
+import { LoadingScreen, LoginScreen, MenuScreen } from './src/screens';
 import { colors } from './src/theme';
-import { Button, ErrorMessage, MealRow, PageHeader, TopBar } from './src/components';
+import { TopBar } from './src/components';
 
 const API_URL = 'https://homechef-lab-gdrag-5772e4ad85f4.herokuapp.com/api';
 const TOKEN_KEY = 'token';
@@ -136,29 +136,13 @@ const App = () => {
           <TopBar />
 
           {token && user ? (
-            <View style={styles.content}>
-              <PageHeader eyebrow="YOUR HOME MENU" title="Dinner," accent="handled." />
-              <Text style={styles.signedIn}>Signed in as {user.email_address}</Text>
-
-              <View style={styles.menuHeader}>
-                <Text style={styles.sectionTitle}>On the menu</Text>
-                <Text style={styles.mealCount}>
-                  {meals.length} {meals.length === 1 ? 'dish' : 'dishes'}
-                </Text>
-              </View>
-
-              {meals.map((meal, index) => (
-                <MealRow key={meal.id} meal={meal} position={index + 1} />
-              ))}
-
-              <ErrorMessage message={error} />
-              <Button
-                title="Sign out"
-                variant="secondary"
-                onPress={signOut}
-                loading={isSubmitting}
-              />
-            </View>
+            <MenuScreen
+              user={user}
+              meals={meals}
+              error={error}
+              isSubmitting={isSubmitting}
+              onSignOut={signOut}
+            />
           ) : (
             <LoginScreen onSignIn={signIn} isSubmitting={isSubmitting} error={error} />
           )}
@@ -175,19 +159,6 @@ export default App;
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
   scrollContent: { flexGrow: 1, paddingHorizontal: 24 },
-  content: { width: '100%', maxWidth: 620, alignSelf: 'center', paddingTop: 30 },
-  signedIn: { marginTop: 14, color: colors.muted, fontSize: 14 },
-  menuHeader: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    justifyContent: 'space-between',
-    marginTop: 42,
-    paddingBottom: 13,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.ink,
-  },
-  sectionTitle: { color: colors.ink, fontFamily: 'Georgia', fontSize: 24 },
-  mealCount: { color: colors.muted, fontSize: 12 },
   footer: {
     marginTop: 'auto',
     paddingVertical: 26,
