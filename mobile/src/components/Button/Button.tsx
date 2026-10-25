@@ -2,9 +2,25 @@ import { ActivityIndicator, Pressable, Text } from 'react-native';
 import { colors } from '../../theme';
 import styles from './styles';
 
-const spinnerColors = { primary: '#fff', secondary: colors.green };
+type ButtonVariant = 'primary' | 'secondary';
 
-const Button = ({ title, onPress, variant = 'primary', loading = false, disabled = false }) => (
+type ButtonProps = {
+  title: string;
+  onPress: () => void;
+  variant?: ButtonVariant;
+  loading?: boolean;
+  disabled?: boolean;
+};
+
+const spinnerColors: Record<ButtonVariant, string> = { primary: '#fff', secondary: colors.green };
+
+const Button = ({
+  title,
+  onPress,
+  variant = 'primary',
+  loading = false,
+  disabled = false,
+}: ButtonProps) => (
   <Pressable
     accessibilityRole="button"
     disabled={disabled || loading}

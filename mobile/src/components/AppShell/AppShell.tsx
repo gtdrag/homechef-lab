@@ -1,10 +1,15 @@
+import type { ReactNode } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import TopBar from '../TopBar';
 import styles from './styles';
 
-const AppShell = ({ children }) => (
+type AppShellProps = {
+  children: ReactNode;
+};
+
+const AppShell = ({ children }: AppShellProps) => (
   <SafeAreaView style={styles.screen} edges={['top', 'bottom']}>
     <KeyboardAvoidingView
       style={styles.screen}
