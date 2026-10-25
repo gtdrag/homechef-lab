@@ -4,6 +4,8 @@ A small meal-kit app built across the stack: a Rails API, a React web menu, and 
 
 Built over a weekend while ramping up on Rails.
 
+![The web menu, the sign-in screen and the menu screen on iPhone](docs/hero.png)
+
 ## Live
 
 - API and server-rendered menu: https://homechef-lab-gdrag-5772e4ad85f4.herokuapp.com
