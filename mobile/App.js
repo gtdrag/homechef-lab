@@ -11,7 +11,6 @@ import { createSession, fetchAccount } from './src/api';
 const TOKEN_KEY = 'token';
 
 const App = () => {
-  const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
   const [meals, setMeals] = useState([]);
   const [error, setError] = useState('');
@@ -34,7 +33,6 @@ const App = () => {
           return;
         }
 
-        setToken(storedToken);
         setUser(account.user);
         setMeals(account.meals);
       } catch (restoreError) {
@@ -69,7 +67,6 @@ const App = () => {
         return;
       }
 
-      setToken(newToken);
       setUser(account.user);
       setMeals(account.meals);
     } catch (signInError) {
@@ -85,7 +82,6 @@ const App = () => {
 
     try {
       await SecureStore.deleteItemAsync(TOKEN_KEY);
-      setToken(null);
       setUser(null);
       setMeals([]);
     } catch {
@@ -110,7 +106,7 @@ const App = () => {
         >
           <TopBar />
 
-          {token && user ? (
+          {user ? (
             <MenuScreen
               user={user}
               meals={meals}
