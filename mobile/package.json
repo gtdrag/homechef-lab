@@ -16,10 +16,13 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "new": "plop",
-    "start:prod": "EXPO_PUBLIC_API_URL=https://homechef-lab-gdrag-5772e4ad85f4.herokuapp.com/api expo start"
+    "start:prod": "EXPO_PUBLIC_API_URL=https://homechef-lab-gdrag-5772e4ad85f4.herokuapp.com/api expo start",
+    "lint": "expo lint"
   },
   "private": true,
   "devDependencies": {
+    "eslint": "^9.0.0",
+    "eslint-config-expo": "~57.0.2",
     "plop": "^4.0.5"
   }
 }
