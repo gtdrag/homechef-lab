@@ -3,7 +3,6 @@ import * as SecureStore from 'expo-secure-store';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
-  ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -14,7 +13,7 @@ import {
 } from 'react-native';
 import { LoadingScreen } from './src/screens';
 import { colors } from './src/theme';
-import { MealRow, TopBar, Button } from './src/components';
+import { Button, ErrorMessage, MealRow, PageHeader, TopBar } from './src/components';
 
 const API_URL = 'https://homechef-lab-gdrag-5772e4ad85f4.herokuapp.com/api';
 const TOKEN_KEY = 'token';
@@ -150,10 +149,7 @@ const App = () => {
 
           {token && user ? (
             <View style={styles.content}>
-              <Text style={styles.eyebrow}>YOUR HOME MENU</Text>
-              <Text style={styles.title}>
-                Dinner, <Text style={styles.titleAccent}>handled.</Text>
-              </Text>
+              <PageHeader eyebrow="YOUR HOME MENU" title="Dinner," accent="handled." />
               <Text style={styles.signedIn}>Signed in as {user.email_address}</Text>
 
               <View style={styles.menuHeader}>
@@ -167,11 +163,7 @@ const App = () => {
                 <MealRow key={meal.id} meal={meal} position={index + 1} />
               ))}
 
-              {error ? (
-                <Text style={styles.errorMessage} accessibilityRole="alert">
-                  {error}
-                </Text>
-              ) : null}
+              <ErrorMessage message={error} />
               <Button
                 title="Sign out"
                 variant="secondary"
@@ -181,10 +173,7 @@ const App = () => {
             </View>
           ) : (
             <View style={styles.loginContent}>
-              <Text style={styles.eyebrow}>A BETTER KIND OF DINNER</Text>
-              <Text style={styles.title}>
-                Welcome <Text style={styles.titleAccent}>home.</Text>
-              </Text>
+              <PageHeader eyebrow="A BETTER KIND OF DINNER" title="Welcome" accent="home." />
               <Text style={styles.subtitle}>Sign in to see what’s cooking.</Text>
 
               <View style={styles.form}>
@@ -217,11 +206,7 @@ const App = () => {
                   value={password}
                 />
 
-                {error ? (
-                  <Text style={styles.errorMessage} accessibilityRole="alert">
-                    {error}
-                  </Text>
-                ) : null}
+                <ErrorMessage message={error} />
 
                 <Button
                   title="Sign in"
@@ -247,15 +232,6 @@ const styles = StyleSheet.create({
   scrollContent: { flexGrow: 1, paddingHorizontal: 24 },
   loginContent: { width: '100%', maxWidth: 460, alignSelf: 'center', paddingTop: 32 },
   content: { width: '100%', maxWidth: 620, alignSelf: 'center', paddingTop: 30 },
-  eyebrow: {
-    marginBottom: 14,
-    color: colors.green,
-    fontSize: 10,
-    fontWeight: '700',
-    letterSpacing: 1.4,
-  },
-  title: { color: colors.ink, fontFamily: 'Georgia', fontSize: 46, lineHeight: 54 },
-  titleAccent: { color: colors.coral, fontStyle: 'italic' },
   subtitle: { marginTop: 12, color: colors.muted, fontSize: 15 },
   signedIn: { marginTop: 14, color: colors.muted, fontSize: 14 },
   form: { marginTop: 38 },
@@ -277,7 +253,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     fontSize: 16,
   },
-  errorMessage: { marginTop: 14, color: '#A23F32', fontSize: 13 },
   menuHeader: {
     flexDirection: 'row',
     alignItems: 'baseline',
