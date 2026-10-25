@@ -6,7 +6,6 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -14,7 +13,7 @@ import {
   View,
 } from 'react-native';
 import { colors } from './src/theme';
-import { MealRow, TopBar } from './src/components';
+import { MealRow, TopBar, Button } from './src/components';
 
 const API_URL = 'https://homechef-lab-gdrag-5772e4ad85f4.herokuapp.com/api';
 const TOKEN_KEY = 'token';
@@ -180,18 +179,12 @@ const App = () => {
                   {error}
                 </Text>
               ) : null}
-              <Pressable
-                accessibilityRole="button"
-                disabled={isSubmitting}
+              <Button
+                title="Sign out"
+                variant="secondary"
                 onPress={signOut}
-                style={({ pressed }) => [styles.secondaryButton, pressed && styles.buttonPressed]}
-              >
-                {isSubmitting ? (
-                  <ActivityIndicator color={colors.green} />
-                ) : (
-                  <Text style={styles.secondaryButtonText}>Sign out</Text>
-                )}
-              </Pressable>
+                loading={isSubmitting}
+              />
             </View>
           ) : (
             <View style={styles.loginContent}>
@@ -237,22 +230,12 @@ const App = () => {
                   </Text>
                 ) : null}
 
-                <Pressable
-                  accessibilityRole="button"
-                  disabled={isSubmitting || !emailAddress.trim() || !password}
+                <Button
+                  title="Sign in"
                   onPress={signIn}
-                  style={({ pressed }) => [
-                    styles.primaryButton,
-                    pressed && styles.buttonPressed,
-                    (isSubmitting || !emailAddress.trim() || !password) && styles.buttonDisabled,
-                  ]}
-                >
-                  {isSubmitting ? (
-                    <ActivityIndicator color="#fff" />
-                  ) : (
-                    <Text style={styles.primaryButtonText}>Sign in</Text>
-                  )}
-                </Pressable>
+                  loading={isSubmitting}
+                  disabled={isSubmitting || !emailAddress.trim() || !password}
+                />
               </View>
             </View>
           )}
@@ -309,27 +292,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     fontSize: 16,
   },
-  primaryButton: {
-    minHeight: 52,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 26,
-    borderRadius: 4,
-    backgroundColor: colors.green,
-  },
-  primaryButtonText: { color: '#fff', fontSize: 15, fontWeight: '700' },
-  secondaryButton: {
-    minHeight: 48,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 30,
-    borderWidth: 1,
-    borderColor: colors.green,
-    borderRadius: 4,
-  },
-  secondaryButtonText: { color: colors.green, fontSize: 14, fontWeight: '700' },
-  buttonPressed: { opacity: 0.82 },
-  buttonDisabled: { opacity: 0.5 },
   errorMessage: { marginTop: 14, color: '#A23F32', fontSize: 13 },
   menuHeader: {
     flexDirection: 'row',
