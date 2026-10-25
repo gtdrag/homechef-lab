@@ -1,7 +1,13 @@
 import { Text } from 'react-native';
 import styles from './styles';
 
-const PageHeader = ({ eyebrow, title, accent }) => (
+type PageHeaderProps = {
+  eyebrow: string;
+  title: string;
+  accent: string;
+};
+
+const PageHeader = ({ eyebrow, title, accent }: PageHeaderProps) => (
   <>
     <Text style={styles.eyebrow}>{eyebrow}</Text>
     <Text style={styles.title}>

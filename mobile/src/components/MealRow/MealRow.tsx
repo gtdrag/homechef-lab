@@ -1,12 +1,18 @@
 import { Text, View } from 'react-native';
 import styles from './styles';
+import type { Meal } from '../../api';
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
 });
 
-const MealRow = ({ meal, position }) => (
+type MealRowProps = {
+  meal: Meal;
+  position: number;
+};
+
+const MealRow = ({ meal, position }: MealRowProps) => (
   <View style={styles.container}>
     <Text style={styles.number}>{String(position).padStart(2, '0')}</Text>
     <View style={styles.details}>
