@@ -19,16 +19,19 @@ const SplashScreenController = () => {
 
 // Auth gate: a screen only exists while its guard is true, so signing in or out
 // moves between routes with no manual navigation.
+
+// Signing in or out swaps state, not depth, so cross-fade instead of the push slide.
+const authTransition = { animation: 'fade', animationDuration: 200 };
 const RootNavigator = () => {
   const { user } = useSession();
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Protected guard={!!user}>
-        <Stack.Screen name="index" />
+        <Stack.Screen name="index" options={authTransition} />
       </Stack.Protected>
       <Stack.Protected guard={!user}>
-        <Stack.Screen name="sign-in" />
+        <Stack.Screen name="sign-in" options={authTransition} />
       </Stack.Protected>
     </Stack>
   );
