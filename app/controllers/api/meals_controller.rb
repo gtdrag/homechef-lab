@@ -1,5 +1,7 @@
 module Api
-  class MealsController < ActionController::API
+  class MealsController < BaseController
+    before_action :require_token, only: :create
+
     MEAL_FIELDS = [ :id, :name, :description, :price_cents, :calories ]
 
     def index

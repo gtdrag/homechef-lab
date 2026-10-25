@@ -1,5 +1,7 @@
 module Api
-  class OrdersController < ActionController::API
+  class OrdersController < BaseController
+    before_action :require_token
+
     PER_PAGE = 20
 
     def index
