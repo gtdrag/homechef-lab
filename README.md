@@ -60,5 +60,3 @@ bundle exec rspec
 bin/rubocop
 cd mobile && npm run lint
 ```
-
-CI runs the specs, RuboCop and security scans on every push.
