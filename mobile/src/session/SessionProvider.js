@@ -1,17 +1,14 @@
-import { useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text } from 'react-native';
-import { LoadingScreen, LoginScreen, MenuScreen } from './src/screens';
-import { colors } from './src/theme';
-import { TopBar } from './src/components';
-import { createSession, fetchAccount } from './src/api';
+import { createSession, fetchAccount } from '../api';
 
 const TOKEN_KEY = 'token';
 
-const App = () => {
+const SessionContext = createContext(null);
+
+export const SessionProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  // Should meals move to TanStack Query once more screens fetch data (meal detail, orders)?
   const [meals, setMeals] = useState([]);
   const [error, setError] = useState('');
   const [isRestoring, setIsRestoring] = useState(true);
@@ -58,6 +55,7 @@ const App = () => {
         setError('Invalid email or password');
         return;
       }
+
       await SecureStore.setItemAsync(TOKEN_KEY, newToken);
       const account = await fetchAccount(newToken);
 
@@ -91,50 +89,15 @@ const App = () => {
     }
   };
 
-  if (isRestoring) return <LoadingScreen />;
-
   return (
-    <SafeAreaView style={styles.screen} edges={['top', 'bottom']}>
-      <KeyboardAvoidingView
-        style={styles.screen}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
-        <StatusBar style="dark" />
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          keyboardShouldPersistTaps="handled"
-        >
-          <TopBar />
-
-          {user ? (
-            <MenuScreen
-              user={user}
-              meals={meals}
-              error={error}
-              isSubmitting={isSubmitting}
-              onSignOut={signOut}
-            />
-          ) : (
-            <LoginScreen onSignIn={signIn} isSubmitting={isSubmitting} error={error} />
-          )}
-
-          <Text style={styles.footer}>Made with care, served with ease.</Text>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    <SessionContext value={{ user, meals, error, isRestoring, isSubmitting, signIn, signOut }}>
+      {children}
+    </SessionContext>
   );
 };
 
-export default App;
-
-const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.background },
-  scrollContent: { flexGrow: 1, paddingHorizontal: 24 },
-  footer: {
-    marginTop: 'auto',
-    paddingVertical: 26,
-    color: colors.muted,
-    fontFamily: 'Georgia',
-    fontSize: 12,
-  },
-});
+export const useSession = () => {
+  const session = useContext(SessionContext);
+  if (!session) throw new Error('useSession must be used inside SessionProvider');
+  return session;
+};
