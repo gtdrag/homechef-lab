@@ -20,4 +20,8 @@ meals.each do |attrs|
   end
 end
 
+User.find_or_create_by!(email_address: "demo@example.com") do |user|
+  user.password = "homechef-demo"
+end
+
 puts "Meals: #{Meal.count}"

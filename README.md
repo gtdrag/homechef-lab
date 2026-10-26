@@ -13,6 +13,8 @@ Built over a weekend while ramping up on Rails.
 - API and server-rendered menu: https://homechef-lab-gdrag-5772e4ad85f4.herokuapp.com
 - React web menu: https://homechef-lab.vercel.app
 
+Demo login, live and after `db:seed`: `demo@example.com` / `homechef-demo`
+
 ## What's in it
 
 **Rails 8.1 API** (`app/`)
